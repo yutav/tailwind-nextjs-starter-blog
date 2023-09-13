@@ -33,7 +33,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
       <nav className="flex justify-between">
         {!prevPage && (
           <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
-            ←前のページ
+            Previous
           </button>
         )}
         {prevPage && (
@@ -41,7 +41,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
             href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${currentPage - 1}`}
             rel="prev"
           >
-            ←前のページ
+            Previous
           </Link>
         )}
         <span>
@@ -49,12 +49,12 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
         </span>
         {!nextPage && (
           <button className="cursor-auto disabled:opacity-50" disabled={!nextPage}>
-            次のページ→
+            Next
           </button>
         )}
         {nextPage && (
           <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
-            次のページ→
+            Next
           </Link>
         )}
       </nav>
@@ -88,13 +88,13 @@ export default function ListLayoutWithCategories({
             <div className="py-4 px-6">
 
               {pathname.startsWith('/blog') ? (
-                <h3 className="text-primary-500 font-bold ">全投稿を見る</h3>
+                <h3 className="text-primary-500 font-bold ">All Posts</h3>
               ) : (
                 <Link
                   href={`/blog`}
                   className="font-bold  text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-500"
                 >
-                  全投稿を見る
+                  All Posts
                 </Link>
               )}
               <ul>
