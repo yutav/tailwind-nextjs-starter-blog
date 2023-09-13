@@ -62,6 +62,26 @@ function createTagCount(allBlogs) {
   writeFileSync('./app/tag-data.json', JSON.stringify(tagCount))
 }
 
+/**
+ * Count the occurrences of all categories across blog posts and write to json file
+ */
+function createCategoryCount(allBlogs) {
+  const categoryCount: Record<string, number> = {}
+  allBlogs.forEach((file) => {
+    if (file.categories && (!isProduction || file.draft !== true)) {
+      file.categories.forEach((category) => {
+        const formattedTag = GithubSlugger.slug(category)
+        if (formattedTag in categoryCount) {
+          categoryCount[formattedTag] += 1
+        } else {
+          categoryCount[formattedTag] = 1
+        }
+      })
+    }
+  })
+  writeFileSync('./app/category-data.json', JSON.stringify(categoryCount))
+}
+
 function createSearchIndex(allBlogs) {
   if (
     siteMetadata?.search?.provider === 'kbar' &&
@@ -83,6 +103,7 @@ export const Blog = defineDocumentType(() => ({
     title: { type: 'string', required: true },
     date: { type: 'date', required: true },
     tags: { type: 'list', of: { type: 'string' }, default: [] },
+    categories: { type: 'list', of: { type: 'string' }, default: [] },
     lastmod: { type: 'date' },
     draft: { type: 'boolean' },
     summary: { type: 'string' },
@@ -153,6 +174,7 @@ export default makeSource({
   onSuccess: async (importData) => {
     const { allBlogs } = await importData()
     createTagCount(allBlogs)
+    createCategoryCount(allBlogs)
     createSearchIndex(allBlogs)
   },
 })

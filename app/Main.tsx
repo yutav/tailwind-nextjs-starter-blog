@@ -4,24 +4,22 @@ import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
 import NewsletterForm from 'pliny/ui/NewsletterForm'
 
-const MAX_DISPLAY = 5
+const MAX_DISPLAY = 10
 
 export default function Home({ posts }) {
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            Latest
-          </h1>
-          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            {siteMetadata.description}
-          </p>
+          <p
+            className="text-lg leading-7 text-gray-500 dark:text-gray-400"
+            dangerouslySetInnerHTML={{ __html: siteMetadata.description }}
+          />
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && 'No posts found.'}
           {posts.slice(0, MAX_DISPLAY).map((post) => {
-            const { slug, date, title, summary, tags } = post
+            const { slug, date, title, summary, tags, categories } = post
             return (
               <li key={slug} className="py-12">
                 <article>
@@ -43,10 +41,24 @@ export default function Home({ posts }) {
                               {title}
                             </Link>
                           </h2>
-                          <div className="flex flex-wrap">
-                            {tags.map((tag) => (
-                              <Tag key={tag} text={tag} />
-                            ))}
+                          <div className="mt-3">
+
+                            {tags.length > 0 && (
+                              <div className="flex flex-wrap">
+                                <span className="text-sm w-full md:w-20">[tag]</span>&nbsp;
+                                {tags.map((tag) => (
+                                  <Tag key={tag} text={tag} />
+                                ))}
+                              </div>
+                            )}
+                            {categories.length > 0 && (
+                              <div className="flex flex-wrap">
+                                <span className="text-sm mt-5 md:mt-0 w-full md:w-20">[category]</span>&nbsp;
+                                {categories.map((category) => (
+                                  <Tag key={category} text={category} />
+                                ))}
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="prose max-w-none text-gray-500 dark:text-gray-400">
@@ -59,7 +71,7 @@ export default function Home({ posts }) {
                           className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                           aria-label={`Read "${title}"`}
                         >
-                          Read more &rarr;
+                          もっと見る &rarr;
                         </Link>
                       </div>
                     </div>
@@ -77,15 +89,15 @@ export default function Home({ posts }) {
             className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
             aria-label="All posts"
           >
-            All Posts &rarr;
+            全ての記事 &rarr;
           </Link>
         </div>
       )}
-      {siteMetadata.newsletter?.provider && (
+      {/*siteMetadata.newsletter?.provider && (
         <div className="flex items-center justify-center pt-4">
           <NewsletterForm />
         </div>
-      )}
+      )*/}
     </>
   )
 }
