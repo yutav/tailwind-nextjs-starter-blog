@@ -79,6 +79,18 @@ module.exports = () => {
         },
       ]
     },
+    async rewrites() {
+      return [
+        {
+          source: '/tag/:path',
+          destination: '/tags/:path',
+        },
+        {
+          source: '/category/:path',
+          destination: '/categories/:path',
+        },
+      ]
+    },
     webpack: (config, options) => {
       config.module.rules.push({
         test: /\.svg$/,
