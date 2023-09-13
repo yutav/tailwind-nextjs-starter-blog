@@ -1,7 +1,5 @@
-const isProd = process.env.NODE_ENV == 'production'
-
 module.exports = {
-  siteUrl: 'https://',
+  siteUrl: process.env.BASE_URL,
   generateRobotsTxt: true,
   sitemapSize: 7000,
   outDir: './public/',
@@ -14,4 +12,5 @@ module.exports = {
       },
     ],
   },
+  additionalSitemaps: [process.env.BASE_URL + 'server-sitemap.xml'],
 }
