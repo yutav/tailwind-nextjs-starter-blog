@@ -44,7 +44,6 @@ export default function Home({ posts }) {
                             </Link>
                           </h2>
                           <div className="mt-3">
-
                             {tags.length > 0 && (
                               <div className="flex flex-wrap">
                                 <span className="text-sm w-full md:w-20">[tag]</span>&nbsp;
@@ -55,7 +54,10 @@ export default function Home({ posts }) {
                             )}
                             {categories.length > 0 && (
                               <div className="flex flex-wrap">
-                                <span className="text-sm mt-5 md:mt-0 w-full md:w-20">[category]</span>&nbsp;
+                                <span className="text-sm mt-5 md:mt-0 w-full md:w-20">
+                                  [category]
+                                </span>
+                                &nbsp;
                                 {categories.map((category) => (
                                   <Tag key={category} text={category} />
                                 ))}
